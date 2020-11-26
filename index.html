@@ -10,7 +10,7 @@
     <!--CSS-->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <title>VALORANT- Login</title>
+    <title>VALORANT - Login</title>
   </head>
   <body>
     <main>
@@ -23,7 +23,7 @@
                 <form class="f">
                     <h3>Fazer Login</h3>
                     <div class="form-group">
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="NOME DE USUARIO">
+                        <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="NOME DE USUARIO">
                     </div>
                     <div class="form-group">
                         <input type="password" class="form-control" id="exampleInputPassword1" placeholder="SENHA">
@@ -72,16 +72,16 @@
                 <i class="fas fa-question-circle"></i>
             </div>
             <div class="area-infos">
-                <form class="f">
+                <form id="form-login" action="index.php" method="post" class="f">
                     <h3>Criar conta</h3>
                     <div class="form-group">
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="NOME DE USUARIO">
+                        <input type="text" class="form-control" id="text" name="nome_usuario" placeholder="NOME DE USUARIO">
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="EMAIL">
+                        <input type="email" class="form-control" id="exampleInputEmail1"name="email_usuario" aria-describedby="emailHelp" placeholder="EMAIL">
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="SENHA">
+                        <input type="password" class="form-control" id="exampleInputPassword1"name="senha" placeholder="SENHA">
                       </div>
                       
                       <button class=" criar btn btn-primary" >CRIAR CONTA</button>
@@ -114,3 +114,43 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   </body>
 </html>
+
+<?php error_reporting (E_ALL ^ E_NOTICE);
+//MSSQL configuração
+$db_user = 'pasha'; // SQL LOGIN
+$db_pass = 'Mendes123'; // SQL SENHA 
+$db_base = "pashasite"; // SQL BACO DE DADOS
+$db_host = "localhost"; // SQL HOST 
+
+$reg_open = true;
+
+$tabelka = '';
+
+if($reg_open AND isset($_POST['login']))
+{
+
+$connectsql=mssql_connect($db_host, $db_user, $db_pass) or die('algo deu errrado.<br /><br />');
+
+$login = $_POST['nome_usuario'];
+$pw = $_POST['senha'];
+$email = $_POST['email_usuario'];
+
+$login = trim($login);
+$pw = trim($pw);
+
+{
+mssql_query(
+"INSERT INTO usuarios(nome, email, senha) VALUES ('$nome_usuario','$email_usuario','$senha_usuario');"
+)or die('algo deu errrado.<br /><br />');
+}
+}
+elseif($reg_open)
+{
+echo $tabelka;
+}
+else
+{
+echo '<center>O registro está fechado no momento. Por favor, tente novamente mais tarde<br /></center>';
+die;
+}
+?>
